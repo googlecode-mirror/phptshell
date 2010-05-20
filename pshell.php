@@ -16,12 +16,13 @@ cmd_hello();
 //shell var init
 $shell_str_arr = array("echo 'Hello';");
 $eval_str = '';
+$i = 0;
 
 while($eval_str = shell_v($shell_str_arr)) {
 	
 	(SBUG)?(is_string($eval_str)?eval($eval_str):''):(is_string($eval_str)?@eval($eval_str):'');
 	
-	echo $br;
+	echo "line: $i".$br;
 	
 	//arr init
 	unset($shell_str_arr);
@@ -54,7 +55,7 @@ while($eval_str = shell_v($shell_str_arr)) {
 
 		$shell_str_arr[] = $cmd_str;
 	}
-
+	$i++;
 	SBUG&&print($cmd_str.$br);
 }
 
@@ -75,16 +76,15 @@ function shell_v($shell_str_arr) {
 				return false;
 			}
 			
+			
+			
 			if(fun_v($shell_str_arr)) {
-				echo 'B';
+
 				echo "$shell_str_arr[0] is function";
 				return true;
-			} elseif (var_v($shell_str_arr)) {
-				echo 'aww';
-				echo $$shell_str_arr[0];
-				return true;
 			} else {
-				echo 'dd';
+				
+				$cmd_str = implode("\n", $shell_str_arr);
 				return $cmd_str;
 			}
 
