@@ -1,3 +1,4 @@
+#! /usr/bin/php
 <?php 
 /*
 	pshell beta 1.0 author:zhaolei
@@ -157,7 +158,12 @@ function cmd_v($shell_str_arr){
 	$cmd_arr = array();
 	if(count($shell_str_arr) == 1) {
 		$p_1 = preg_match_all("/cmd\:(\w*)/i", $shell_str_arr[0], $cmd_arr);
-		return $cmd_arr[1][0];
+		if(!empty($cmd_arr[1])) {
+			return $cmd_arr[1][0];
+		} else {
+			return false;
+		}
+
 	}
 	
 	return false;
